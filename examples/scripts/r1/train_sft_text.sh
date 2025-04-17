@@ -10,7 +10,7 @@
 export WORKSPACE_DIR="$(pwd)"                      # Path to project root directory
 export DATASET_PATH="./data/am_0.5M.jsonl"  # Path to your dataset
 export PRETRAIN_MODEL_PATH="../../Qwen2.5-VL-3B-Instruct"  # Path to pretrained model
-export SAVE_PATH="/checkpoints"                   # Absolute path to save checkpoints
+export SAVE_PATH="./checkpoints"                   # Absolute path to save checkpoints
 
 # Model configuration
 export MODEL_NAME="qwen-2.5-vl-3b-sft-text"              # Name for this training run
@@ -20,10 +20,10 @@ export WANDB_DIR="${WORKSPACE_DIR}"                # Directory for wandb files
 export WANDB_API_KEY="dabb4679bdd222ed5d5a2f48741598127d413010"          # Your wandb API key (if online)
 
 # =================== Preprocess Dataset ===================
-python ./data/sft_preprocess.py
+#python ./data/sft_preprocess.py
 
 # =================== Script Execution ===================
-read -r -d ''training_commands <<EOF
+read -r -d '' training_commands <<EOF
 openrlhf.cli.train_sft \
     --max_len 4096 \
     --dataset ${DATASET_PATH} \
@@ -47,5 +47,5 @@ openrlhf.cli.train_sft \
 EOF
 
 if [[ ${1} != "slurm" ]]; then
-    deepspeed --include="localhost:1" --module $training_commands
+    deepspeed --module $training_commands
 fi
