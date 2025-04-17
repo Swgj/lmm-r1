@@ -45,3 +45,7 @@ openrlhf.cli.train_sft \
    --load_checkpoint \
    --gradient_checkpointing
 EOF
+
+if [[ ${1} != "slurm" ]]; then
+    deepspeed --include="localhost:1" --module $training_commands
+fi
