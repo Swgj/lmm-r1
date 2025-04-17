@@ -152,3 +152,8 @@ core
 ckpts
 data
 !examples/data
+
+*/data/*.json
+*/data/*.jsonl
+*/data/*.ipynb
+*.jsonl
