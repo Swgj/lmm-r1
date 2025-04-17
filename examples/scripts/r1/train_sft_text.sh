@@ -29,7 +29,7 @@ openrlhf.cli.train_sft \
     --dataset ${DATASET_PATH} \
     --input_key question \
     --output_key response \
-    --train_batch_size 64 \
+    --train_batch_size 32 \
     --micro_train_batch_size 2 \
     --max_samples 500000 \
     --pretrain ${PRETRAIN_MODEL_PATH} \
@@ -45,6 +45,9 @@ openrlhf.cli.train_sft \
    --load_checkpoint \
    --gradient_checkpointing
 EOF
+
+# --wandb ${WANDB_DIR} \
+# --wandb_name "${MODEL_NAME}-$(date +%Y%m%d-%H%M)"
 
 if [[ ${1} != "slurm" ]]; then
     deepspeed --module $training_commands
