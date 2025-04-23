@@ -4,7 +4,7 @@
 #SBATCH --gpus=2
 #SBATCH --time=24:00:00
 #SBATCH --partition=normal
-#SBATCH --account=msbdt2024
+#SBATCH --account=mscbdt2024
 #SBATCH --output=slurm_sft.out
 
 module purge # clear environment modules inherited from submission
