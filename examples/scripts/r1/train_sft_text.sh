@@ -37,29 +37,23 @@ openrlhf.cli.train_sft \
     --input_key question \
     --output_key response \
     --train_batch_size 32 \
-    --micro_train_batch_size 8 \
-    --gradient_accumulation_steps 2 \
+    --micro_train_batch_size 4 \
     --max_samples 50000 \
     --pretrain ${PRETRAIN_MODEL_PATH} \
     --save_path ${SAVE_PATH}/${MODEL_NAME} \
     --save_steps -1 \
-   --logging_steps 50 \
-   --eval_steps 10000 \
-   --zero_stage 3 \
-   --offload_optimizer_device cpu \
-   --offload_param_device nvme \
-   --max_epochs 1 \
-   --bf16 \
-   --flash_attn \
-   --learning_rate 2e-6 \
-   --lr_scheduler_type cosine \
-   --warmup_steps 200 \
-   --weight_decay 0.01 \
-   --load_checkpoint \
-   --gradient_checkpointing \
-   --use_wandb ${WANDB_API_KEY} \
-   --wandb_run_name ${MODEL_NAME} \
-   --wandb_group "r1"
+    --logging_steps 50 \
+    --eval_steps 10000 \
+    --zero_stage 3 \
+    --max_epochs 1 \
+    --bf16 \
+    --flash_attn \
+    --learning_rate 2e-6 \
+    --load_checkpoint \
+    --gradient_checkpointing \
+    --use_wandb ${WANDB_API_KEY} \
+    --wandb_run_name ${MODEL_NAME} \
+    --wandb_group "r1"
 EOF
 
 # --wandb ${WANDB_DIR} \
