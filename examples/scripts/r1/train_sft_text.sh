@@ -20,8 +20,11 @@ export WANDB_DIR="${WORKSPACE_DIR}"                # Directory for wandb files
 export WANDB_API_KEY="dabb4679bdd222ed5d5a2f48741598127d413010"          # Your wandb API key (if online)
 
 # optimize CUDA momory setting
-export PYTORCH_CUDA_ALLOC_CONF="expandable_segments:True,max_split_size_mb:512"
-export NCCL_ASYNC_ERROR_HANDLING=1  # 增强NCCL错误处理
+export PYTORCH_CUDA_ALLOC_CONCURRENCY=2  # 并行内存分配
+export PYTORCH_CUDA_ALLOC_CONF="expandable_segments:True,max_split_size_mb:512,roundup_power2_divisions:4"
+export NCCL_ASYNC_ERROR_HANDLING=1
+export NCCL_IB_DISABLE=0  # 启用InfiniBand（若集群支持）
+export CUDA_LAUNCH_BLOCKING=0  # 异步内核执行
 
 # =================== Preprocess Dataset ===================
 #python ./data/sft_preprocess.py
@@ -33,19 +36,25 @@ openrlhf.cli.train_sft \
     --dataset ${DATASET_PATH} \
     --input_key question \
     --output_key response \
-    --train_batch_size 16 \
-    --micro_train_batch_size 2 \
+    --train_batch_size 32 \
+    --micro_train_batch_size 8 \
+    --gradient_accumulation_steps 2 \
     --max_samples 50000 \
     --pretrain ${PRETRAIN_MODEL_PATH} \
     --save_path ${SAVE_PATH}/${MODEL_NAME} \
     --save_steps -1 \
-   --logging_steps 10 \
+   --logging_steps 50 \
    --eval_steps 10000 \
    --zero_stage 3 \
+   --offload_optimizer_device cpu \
+   --offload_param_device nvme \
    --max_epochs 1 \
    --bf16 \
    --flash_attn \
    --learning_rate 2e-6 \
+   --lr_scheduler_type cosine \
+   --warmup_steps 200 \
+   --weight_decay 0.01 \
    --load_checkpoint \
    --gradient_checkpointing \
    --use_wandb ${WANDB_API_KEY} \
