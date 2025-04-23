@@ -19,6 +19,10 @@ export MODEL_NAME="qwen-2.5-vl-3b-sft-text"              # Name for this trainin
 export WANDB_DIR="${WORKSPACE_DIR}"                # Directory for wandb files
 export WANDB_API_KEY="dabb4679bdd222ed5d5a2f48741598127d413010"          # Your wandb API key (if online)
 
+# optimize CUDA momory setting
+export PYTORCH_CUDA_ALLOC_CONF="expandable_segments:True,max_split_size_mb:512"
+export NCCL_ASYNC_ERROR_HANDLING=1  # 增强NCCL错误处理
+
 # =================== Preprocess Dataset ===================
 #python ./data/sft_preprocess.py
 
@@ -37,7 +41,7 @@ openrlhf.cli.train_sft \
     --save_steps -1 \
    --logging_steps 10 \
    --eval_steps 10000 \
-   --zero_stage 2 \
+   --zero_stage 3 \
    --max_epochs 1 \
    --bf16 \
    --flash_attn \
