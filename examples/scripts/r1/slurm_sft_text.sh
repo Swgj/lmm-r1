@@ -53,7 +53,7 @@ openrlhf.cli.train_sft \
     --save_path ${SAVE_PATH}/${MODEL_NAME} \
     --save_steps -1 \
     --logging_steps 50 \
-    --eval_steps 10000 \
+    --eval_steps 3125 \
     --zero_stage 3 \
     --max_epochs 1 \
     --bf16 \
