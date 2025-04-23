@@ -31,24 +31,27 @@ openrlhf.cli.train_sft \
     --output_key response \
     --train_batch_size 32 \
     --micro_train_batch_size 2 \
-    --max_samples 500000 \
+    --max_samples 50000 \
     --pretrain ${PRETRAIN_MODEL_PATH} \
     --save_path ${SAVE_PATH}/${MODEL_NAME} \
-    --save_steps 2500 \
+    --save_steps -1 \
    --logging_steps 10 \
-   --eval_steps 1000 \
+   --eval_steps 10000 \
    --zero_stage 2 \
    --max_epochs 1 \
    --bf16 \
    --flash_attn \
    --learning_rate 2e-6 \
    --load_checkpoint \
-   --gradient_checkpointing
+   --gradient_checkpointing \
+   --use_wandb ${WANDB_API_KEY} \
+   --wandb_run_name ${MODEL_NAME} \
+   --wandb_group "r1"
 EOF
 
 # --wandb ${WANDB_DIR} \
 # --wandb_name "${MODEL_NAME}-$(date +%Y%m%d-%H%M)"
 
 if [[ ${1} != "slurm" ]]; then
-    deepspeed --module $training_commands
+    deepspeed  --master_port=29501 --module $training_commands
 fi
