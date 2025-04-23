@@ -1,4 +1,14 @@
 #!/bin/bash
+#SBATCH --job-name=sft_text
+#SBATCH --nodes=1
+#SBATCH --gpus=1
+#SBATCH --time=24:00:00
+#SBATCH --partition=normal
+#SBATCH --account=msbdt2024
+#SBATCH --output=slurm_sft.out
+
+module purge # clear environment modules inherited from submission
+module load cuda12.2/toolkit/12.2.2 # load cuda module
 
 # set -x
 
