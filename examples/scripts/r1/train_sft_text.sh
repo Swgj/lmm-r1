@@ -28,7 +28,7 @@ export CUDA_LAUNCH_BLOCKING=0  # 异步内核执行
 
 # =================== Preprocess Dataset ===================
 #python ./data/sft_preprocess.py
-
+export INPUT_TEMPLATE="User: As a reasoning expert; answer the question {} Output the thinking process in '<think></think>' tags and final answer in '<answer></answer>' tags.\nAssistant: "
 # =================== Script Execution ===================
 read -r -d '' training_commands <<EOF
 openrlhf.cli.train_sft \
@@ -36,6 +36,7 @@ openrlhf.cli.train_sft \
     --dataset ${DATASET_PATH} \
     --input_key question \
     --output_key response \
+    --input_template ${INPUT_TEMPLATE} \
     --train_batch_size 32 \
     --micro_train_batch_size 4 \
     --max_samples 50000 \
