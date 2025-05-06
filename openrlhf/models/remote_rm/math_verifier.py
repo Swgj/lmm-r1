@@ -190,5 +190,5 @@ if __name__ == "__main__":
     # math_verify can only run in main thread
     math_verify_executor = futures.ProcessPoolExecutor(max_workers=16)
 
-    app.run(host="0.0.0.0", port=5000, debug=False, use_reloader=False)
+    app.run(host="0.0.0.0", port=6000, debug=False, use_reloader=False)
     math_verify_executor.shutdown()

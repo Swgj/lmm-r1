@@ -157,3 +157,5 @@ data
 */data/*.jsonl
 */data/*.ipynb
 *.jsonl
+
+*am_0.5M*
