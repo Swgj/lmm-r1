@@ -159,3 +159,6 @@ data
 *.jsonl
 
 *am_0.5M*
+*/checkpoints
+*/wandb
+*.zst

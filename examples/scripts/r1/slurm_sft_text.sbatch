@@ -10,8 +10,8 @@
 module purge # clear environment modules inherited from submission
 module load cuda12.2/toolkit/12.2.2 # load cuda module
 
-source ~/.bashrc
-conda activate lmm-r1
+module load Anaconda3
+source activate lmm-r1
 # set -x
 
 # =================== User Configuration ===================
